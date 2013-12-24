@@ -62,7 +62,7 @@ public class Toolkit {
 		} else if (osName.indexOf("win") >= 0) {
     		libExtension = ".dll";
 		} else if (osName.indexOf("mac") >= 0) {
-    		libExtension = ".jnilib";	 // TODO not sure
+    		libExtension = ".jnilib"; // TODO not sure
     	}
     	// $PWD/jcurses.so
     	searchPaths.add(System.getProperty("user.dir") + "/" + LIBRARY_NAME + libExtension);
@@ -72,6 +72,16 @@ public class Toolkit {
     	searchPaths.add(System.getProperty("user.dir") + "/lib/" + LIBRARY_NAME + libExtension);
     	// $PWD/lib/libjcurses.so
     	searchPaths.add(System.getProperty("user.dir") + "/lib/lib" + LIBRARY_NAME + libExtension);
+
+    	// $HOME/jcurses.so
+    	searchPaths.add(System.getProperty("user.home") + "/" + LIBRARY_NAME + libExtension);
+    	// $HOME/libjcurses.so
+    	searchPaths.add(System.getProperty("user.home") + "/lib" + LIBRARY_NAME + libExtension);
+    	// $PWD/.local/lib/jcurses.so
+    	searchPaths.add(System.getProperty("user.home") + ".local/lib/" + LIBRARY_NAME + libExtension);
+    	// $PWD/.local/lib/libjcurses.so
+    	searchPaths.add(System.getProperty("user.home") + ".local/lib/lib" + LIBRARY_NAME + libExtension);
+
     	
     	boolean foundInPath = false;
 		for (String sp : searchPaths) {
