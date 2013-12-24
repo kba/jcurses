@@ -29,7 +29,7 @@ public class AwtTest extends Frame implements ItemListener
 
     list.addItemListener(this);
     add(list);
-    show();
+    setVisible(true);
   }
 
   public void itemStateChanged(ItemEvent e)
@@ -40,7 +40,7 @@ public class AwtTest extends Frame implements ItemListener
   public static void main(String[] args)
   {
     AwtTest test = new AwtTest();
-    new FileDialog(test).show();
+    new FileDialog(test).setVisible(true);
   }
 
 }
