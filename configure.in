@@ -1,0 +1,19 @@
+AC_INIT(Makefile.in)
+AC_PATH_PROG(javahome,java)
+javahome=`dirname ${JAVA_HOME}`
+echo "JAVAHOME=${javahome}"
+for each in `ls ${javahome}/include` ;do
+  if [ test -d ${javahome}/include/${each} ] ;then
+     javaos=${each}
+  fi;
+done;
+echo "JAVAOS=${javaos}"
+AC_SUBST(javaos)
+AC_CHECK_PROG(gcc,gcc,gcc)
+AC_PROG_CC
+AC_CHECK_LIB(curses,initscr,curses=-lcurses)
+AC_CHECK_LIB(ncurses,initscr,curses=-lncurses)
+AC_SUBST(curses)
+AC_OUTPUT(Makefile)
+
+

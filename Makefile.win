@@ -1,0 +1,31 @@
+#Variables to fill  
+
+BCC_HOME=D:\Programme\Borland\BCC55
+JAVAHOME=D:\jdk1.2.2 
+SRCDIR=.
+CCOPTIONS = -c -w-par -w-pro -w-aus 
+
+#Dependent Variables  
+LINKER=$(BCC_HOME)\bin\ilink32
+CC=$(BCC_HOME)\bin\bcc32
+
+JAVAC=$(JAVAHOME)\bin\javac 
+JAR=$(JAVAHOME)\bin\jar 
+JAVAH=$(JAVAHOME)\bin\javah 
+JAVA=$(JAVAHOME)\bin\java 
+JAVADOC=$(JAVAHOME)\bin\javadoc 
+INCLUDE=-I$(JAVAHOME)\include  -I$(JAVAHOME)\include\win32 -I$(BCC_HOME)\Include 
+CLASSPATH=$(SRCDIR)\classes
+LIBS=/L$(BCC_HOME)\lib;$(BCC_HOME)\lib\PSDK  
+
+
+#Rules   
+default: jar native docs
+java: ;$(JAVAC) -classpath $(CLASSPATH) -d  $(SRCDIR)\classes -sourcepath $(SRCDIR)\src  $(SRCDIR)\src\jcurses\tests\*.java $(SRCDIR)\src\jcurses\system\*.java   $(SRCDIR)\src\jcurses\util\*.java $(SRCDIR)\src\jcurses\event\*.java $(SRCDIR)\src\jcurses\widgets\*.java
+docs: ;$(JAVADOC) -classpath $(CLASSPATH) -sourcepath $(SRCDIR)\src -d $(SRCDIR)\doc jcurses.event jcurses.system jcurses.util jcurses.widgets
+include: java;$(JAVAH) -classpath $(CLASSPATH) -d src\native\include jcurses.system.Toolkit
+clean: ;rmdir  /S /Q $(SRCDIR)\classes\jcurses && del /Q $(SRCDIR)\lib\jcurses.* && del /Q $(SRCDIR)\lib\libjcurses.*
+native:java include;$(CC)  $(CCOPTIONS)  $(INCLUDE) -olib\libjcurses.obj  src\native\WinToolkit.c && $(LINKER) $(LIBS) /Tpd $(LIBS) lib\libjcurses.obj,lib\libjcurses.dll,,c0d32.obj cw32 import32,src\native\WinToolkit.def && del lib\*.i* lib\*.tds lib\*.obj lib\*.map
+nativetest:java include;$(CC)  $(CCOPTIONS) $(INCLUDE) -olib\libjcurses.obj  src\native\WinToolkit.c && $(LINKER) $(LIBS) /ap $(LIBS) lib\libjcurses.obj,lib\libjcurses.exe,, c0x32.obj cw32 import32 
+jar: java;cd classes && $(JAR) -cvf ..\lib\jcurses.jar *
+test: ;$(JAVA) -classpath $(SRCDIR)\lib\jcurses.jar -Djcurses.protocol.filename=jcurses.log jcurses.tests.Test  

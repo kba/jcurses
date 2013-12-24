@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jcurses</groupId>
+    <artifactId>jcurses</artifactId>
+    <version>0.9.6</version>
+    <name>jcurses</name>
+    <description>The Java Curses Library (JCurses) is library for developing text terminal based applications using Java programming language. It is implemented as a Windowing toolkit similar to AWT, but built upon the UNIX "curses" windowing system.</description>
+    <inceptionYear>2001</inceptionYear>
+    <organization>
+        <name>JCurses Development Team</name>
+        <url>http://sourceforge.net/projects/javacurses</url>
+    </organization>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <scm>
+        <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/javacurses:${project.name}</connection>
+        <url>http://sourceforge.net/projects/javacurses</url>
+    </scm>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <plugins>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <moduleExcludes>
+                        <xdoc>navigation.xml,changes.xml</xdoc>
+                    </moduleExcludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- Call javah -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <exportAntProperties>true</exportAntProperties>
+                            <target>
+                                <exec executable="make"><arg value="clean"/></exec>
+                                <exec executable="./configure"/>
+                                <exec executable="make"><arg value="native"/></exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <!-- <execution> -->
+                    <!--     <phase>process-classes</phase> -->
+                    <!--     <goals><goal>run</goal></goals> -->
+                    <!--     <configuration> -->
+                    <!--         <exportAntProperties>true</exportAntProperties> -->
+                    <!--         <target> -->
+                    <!--             <exec executable="make"><arg value="clean"/></exec> -->
+                    <!--             <exec executable="./configure"/> -->
+                    <!--             <exec executable="make"><arg value="native"/></exec> -->
+                    <!--         </target> -->
+                    <!--     </configuration> -->
+                    <!-- </execution> -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-changelog-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-changes-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+                <configuration>
+                    <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>tds-checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-linkcheck-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>onejar-maven-plugin.googlecode.com</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

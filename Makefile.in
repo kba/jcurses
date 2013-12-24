@@ -1,0 +1,23 @@
+CURSES=@curses@
+JAVAHOME=@javahome@
+JAVAC=$(JAVAHOME)/bin/javac
+JAR=$(JAVAHOME)/bin/jar
+JAVAH=$(JAVAHOME)/bin/javah
+JAVA=$(JAVAHOME)/bin/java
+JAVADOC=$(JAVAHOME)/bin/javadoc
+GCC=@gcc@
+GCCFLAGS=-Wall -shared -fPIC -I$(JAVAHOME)/include -I$(JAVAHOME)/include/@javaos@ 
+CLASSPATH=@srcdir@/classes
+PREFIX=@prefix@
+
+default: native
+all: jar native docs
+java: ;$(JAVAC) -Xlint:deprecation -classpath $(CLASSPATH) -d  @srcdir@/classes `find @srcdir@/src/jcurses -name *.java`
+docs: ;$(JAVADOC) -classpath $(CLASSPATH) -overview @srcdir@/overview.html -sourcepath @srcdir@/src -d @srcdir@/doc/javadoc jcurses.dialogs jcurses.event jcurses.system jcurses.util jcurses.widgets
+native: java include
+include: java;$(JAVAH) -classpath $(CLASSPATH) -d @srcdir@/src/native/include jcurses.system.Toolkit
+clean: ;rm -rf @srcdir@/classes/jcurses @srcdir@/lib/libjcurses.so @srcdir@/lib/jcurses.jar @srcdir@/src/native/include/*.h @srcdir@/config.status @srcdir@/config.log @srcdir@/Makefile @srcdir@/config.cache
+native:java include;$(GCC) $(GCCFLAGS) -o lib/libjcurses.so $(CURSES) src/native/Toolkit.c   
+jar: java;cd classes/ && $(JAR) -cvf ../lib/jcurses.jar *
+test: ;$(JAVA) -classpath @srcdir@/lib/jcurses.jar -Djcurses.protocol.filename=jcurses.log jcurses.tests.Test
+install: include;echo $(PREFIX)
