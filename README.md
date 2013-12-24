@@ -56,4 +56,4 @@ Steps to compile the library:
 2. ./configure
 3. make all (the default target is just to make the shared C library)
 
-To use the compiled library see [Installation](#Installation).
+To use the compiled library see [Installation](#installation).
