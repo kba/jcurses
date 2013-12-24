@@ -238,7 +238,7 @@ JNIEXPORT void JNICALL Java_jcurses_system_Toolkit_printString (JNIEnv * env, jc
     int xpos,ypos;
     int length = (*env)->GetArrayLength(env,bytes);
     unsigned char c;
-    unsigned char * charArray = (*env)->GetByteArrayElements(env, bytes, NULL);
+    signed char * charArray = (*env)->GetByteArrayElements(env, bytes, NULL);
 
     attrset(JCURSES_ATTRIBUTES(number,attr));
 
