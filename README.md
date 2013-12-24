@@ -13,8 +13,8 @@ application,that bases on the library, creates one or more of this
 windows and reacts on events coming by user interactions with GUI
 elements.
 
-<a name="installation"/>Environment
------------------------------------
+Environment
+-----------
 
 The Java Curses Library consists of two parts: the plattform
 independent part, that contains Java classes, used writing applicatons
@@ -33,7 +33,7 @@ port, because the autoconf is used to create the makefile.
  d) The shared library built by Java Curses must be in the same
     directory as jcurses.jar
 
-Installation[foo]
+Installation
 ------------
 
 ### Binary Distribution
