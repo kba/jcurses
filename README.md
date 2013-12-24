@@ -1,4 +1,8 @@
-1. Preamble
+JCurses -- a java console windowing toolkit for Windows and Linux
+=================================================================
+
+Preamble
+--------
 
 The Java Curses Library is a library that makes is possible to create
 text- based terminal applications in the Java programming language,
@@ -9,7 +13,8 @@ application,that bases on the library, creates one or more of this
 windows and reacts on events coming by user interactions with GUI
 elements.
 
-2. Environment
+<a name="installation"/>Environment
+-----------------------------------
 
 The Java Curses Library consists of two parts: the plattform
 independent part, that contains Java classes, used writing applicatons
@@ -28,15 +33,16 @@ port, because the autoconf is used to create the makefile.
  d) The shared library built by Java Curses must be in the same
     directory as jcurses.jar
 
-3. Installation
+Installation[foo]
+------------
 
-3.1 Binary Distribution
+### Binary Distribution
 
 The binary distribution comes already compiled for the specified plattform,
 it contains the library ( jcurses.jar and libjcurses.XXX ) in the lib
 directory and the Java documentation in the javadoc directory.
 
-3.2 Source Distribution
+### Source Distribution
 
 The Source distribution is to use under UNIX plattforms other as Linux.
 To compile the library following conditions are required:
@@ -50,8 +56,4 @@ Steps to compile the library:
 2. ./configure
 3. make all (the default target is just to make the shared C library)
 
-To use the compiled library see 2.
-
-
-  
-
+To use the compiled library see [Installation](#Installation).
